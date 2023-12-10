@@ -30,6 +30,11 @@ jobs:
           azcliversion: latest
           inlineScript: |
             az aks get-credentials --resource-group backend --name BackEndCluster 
+      - name: Set AKS context
+        uses: azure/aks-set-context@v3
+        with:
+          resource-group: 'backend' 
+          cluster-name: 'BackEndCluster'
 
       - name: Setup kubectl
         id: install-kubectl
