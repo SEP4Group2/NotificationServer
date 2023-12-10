@@ -13,9 +13,16 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      - name: Log into Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
       - name: Set up AKS credentials
         run: 
-          az aks get-credentials --resource-group backend --name BackEndCluster --admin
+          az aks get-credentials --resource-group backend --name BackEndCluster 
 
       - name: Deploy to AKS
         run: |
