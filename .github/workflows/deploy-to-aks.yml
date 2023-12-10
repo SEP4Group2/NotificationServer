@@ -40,4 +40,4 @@ jobs:
         with:
           namespace: 'default'
           manifests: |
-             notificationserver-deployment.yaml
+             k8s/notificationserver-deployment.yaml
