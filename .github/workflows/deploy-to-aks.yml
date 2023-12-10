@@ -30,10 +30,6 @@ jobs:
           azcliversion: latest
           inlineScript: |
             az aks get-credentials --resource-group backend --name BackEndCluster 
-            cat $HOME/.kube/config  # Add this line to print the Kubernetes config
-          
-      - name: Display Kubernetes Config
-        run: cat $HOME/.kube/config  # Display the Kubernetes config to troubleshoot
 
       - name: Setup kubectl
         id: install-kubectl
