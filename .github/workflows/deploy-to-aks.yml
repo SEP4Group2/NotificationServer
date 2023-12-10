@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up AKS credentials
-        run: az aks update-credentials --resource-group backend --name BackEndCluster --reset-identity
+        run: az aks update-credentials --resource-group backend --name BackEndCluster 
 
       - name: Deploy to AKS
         run: |
