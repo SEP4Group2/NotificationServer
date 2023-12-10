@@ -46,3 +46,6 @@ jobs:
           namespace: 'default'
           manifests: |
              k8s/notificationserver-deployment.yaml
+          images: 'tinajassik/notification-server:latest'
+          pull-images: true
+          strategy: basic
