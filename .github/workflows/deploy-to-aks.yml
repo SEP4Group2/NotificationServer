@@ -1,5 +1,9 @@
 name: AKS Deployment
 
+permissions:
+  id-token: write
+  contents: read
+  
 on:
   push:
     branches:
@@ -13,9 +17,35 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Set up AKS credentials
-        run: az aks get-credentials --resource-group backend --name BackEndCluster 
+      - name: Log into Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
+      - name: Azure CLI script
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az aks get-credentials --resource-group backend --name BackEndCluster 
+      - name: Set AKS context
+        uses: azure/aks-set-context@v3
+        with:
+          resource-group: 'backend' 
+          cluster-name: 'BackEndCluster'
+
+      - name: Setup kubectl
+        id: install-kubectl
+        uses: azure/setup-kubectl@v3
       - name: Deploy to AKS
-        run: |
-          kubectl apply -f k8s
+        id: deploy-aks
+        uses: Azure/k8s-deploy@v4
+        with:
+          namespace: 'default'
+          manifests: |
+             k8s/notificationserver-deployment.yaml
+          images: 'tinajassik/notification-server:latest'
+          pull-images: true
+          strategy: basic
