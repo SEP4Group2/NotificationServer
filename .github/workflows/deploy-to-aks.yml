@@ -1,0 +1,21 @@
+name: AKS Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up AKS credentials
+        run: az aks get-credentials --resource-group backend --name BackEndCluster --overwrite-existing
+
+      - name: Deploy to AKS
+        run: |
+          kubectl apply -f k8s
