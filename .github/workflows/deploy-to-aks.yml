@@ -15,7 +15,7 @@ jobs:
 
       - name: Set up AKS credentials
         run: 
-          az aks get-credentials --resource-group backend --name BackEndCluster 
+          az aks get-credentials --resource-group backend --name BackEndCluster --admin
 
       - name: Deploy to AKS
         run: |
