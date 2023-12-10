@@ -35,6 +35,13 @@ jobs:
       - name: Display Kubernetes Config
         run: cat $HOME/.kube/config  # Display the Kubernetes config to troubleshoot
 
+      - name: Setup kubectl
+        id: install-kubectl
+        uses: azure/setup-kubectl@v3
       - name: Deploy to AKS
-        run: |
-          kubectl apply -f k8s
+        id: deploy-aks
+        uses: Azure/k8s-deploy@v4
+        with:
+          namespace: 'default'
+          manifests: |
+             notificationserver-deployment.yaml
