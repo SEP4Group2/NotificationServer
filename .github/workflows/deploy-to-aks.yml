@@ -1,5 +1,9 @@
 name: AKS Deployment
 
+permissions:
+  id-token: write
+  contents: read
+  
 on:
   push:
     branches:
